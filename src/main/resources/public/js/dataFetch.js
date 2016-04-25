@@ -37,8 +37,7 @@ function pullPoData() {
         method: "POST",
         headers: {
             'content-type': "application/json",
-            'cache-control': "no-cache",
-            'postman-token': "c54e1080-38f2-b49b-e16c-dfd195d94f79"
+            'cache-control': "no-cache"
         },
         processData: false,
         data: "{\"firstSearch\":true}",
@@ -154,8 +153,7 @@ function processPoData() {
             method: "POST",
             headers: {
                 'content-type': "application/json",
-                'cache-control': "no-cache",
-                'postman-token': "8a35594e-6f4b-e7f5-161b-652976ef7f03"
+                'cache-control': "no-cache"
             },
             processData: false,
             data: sendDataStr,

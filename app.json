@@ -2,7 +2,7 @@
   "name": "Manage-PO-Core-Service",
   "description": "E2Open POC project.",
   "website": "https://github.com/sunilsoni/manage-po-core-service",
-  "success_url": "/health",
+  "success_url": "/",
   "env": {
     "EUREKA_URL": {
       "description": "URL of the Eureka Server in the form http://<user>:<password>@<host>"
