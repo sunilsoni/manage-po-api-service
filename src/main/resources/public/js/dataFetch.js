@@ -23,7 +23,6 @@ $('#processPoDataBtn').click(function() {
 
 
 function pullPoData() {
-    debugger;
     if ($('#error2').length > 0) {
         //this block executes only if error2 exists in dom.
         $('#error2').remove();
@@ -52,7 +51,6 @@ function pullPoData() {
     /*dataType: 'jsonp',*/
 
     $.ajax(settings).done(function(response) {
-        debugger;
 
         if (response) {
             serverResponse = response;
@@ -92,7 +90,6 @@ function pullPoData() {
 }; //pullPoData
 
 $("#myGrid").on('click', ".checkbox-button", function() {
-    //debugger;
     console.log('checkbox value: ' + this.value);
     var name = this.name.split('_');
     var poNumber = name[1];
