@@ -1,0 +1,114 @@
+/* - - - - - - - - - - - *
+       Local Styles
+ * - - - - - - - - - - - */
+ 
+footer {
+            padding: 30px 0 20px;
+            border-top: 3px solid #009CDE;
+            font-size: 12px;
+        }
+
+header {
+    padding: 30px 0 20px;
+    border-bottom: 3px solid #009CDE;
+}
+
+.headerUl {
+    list-style: none;
+}
+
+.colorheader {
+    color: #009CDE;
+    font-weight: bold;
+}
+
+.colorheaderdeg {
+    color: #009CDE;
+    font-size: 16px;
+}
+
+body {
+    font-size: 16px;
+    font-family: Verdana, Arial, Times New Roman, Sans-Serif;
+    height: 100%;
+    width: 100%;
+}
+
+.headerDivOne {
+    margin-right: 12px;
+    padding-top: 0px;
+    float: right;
+    margin-bottom: 0px !important;
+}
+
+.headerDiv {
+    float: right;
+    padding-top: 10px;
+    margin-bottom: 0px !important;
+}
+
+#home {
+    box-shadow: 0px 5px 5px #888888;
+    border: 1px solid #bdbdbd;
+    background-color: #fff;
+}
+
+#tabUl > li > a {
+    background-color: #009CDE;
+    color: #fff;
+    font-weight: bold;
+}
+
+    #tabUl > li > a:hover,
+    #tabUl > li > a:focus {
+        background-color: #0b3690;
+        color: #fff;
+        font-weight: bold;
+    }
+
+.headerTable {
+    background-color: #939393;
+    color: #fff;
+}
+
+.table-danger {
+    background-color: #f2dede !important;
+}
+
+.table-success {
+    background-color: #dff0d8 !important;
+}
+
+.table-active {
+    background-color: #d9edf7 !important;
+}
+
+.jci-color {
+    background: #f4f7f9 !important;
+}
+
+.highcharts-series-group > .highcharts-series > rect {
+    width: 18px !important;
+}
+
+.errorText {
+    top: 180px;
+    padding-right: 22px;
+}
+/*.highcharts-series-0 > rect {
+    fill: #6666ff !important;
+}
+.highcharts-series-1 > rect {
+    fill: #ff8119 !important;
+}
+.highcharts-series-2 > rect {
+    fill: #bab4b0 !important;
+}*/
+
+ .errorText > table > tbody {
+    text-align: center;
+}
+#error >  a:hover,
+#error > a:focus{
+    text-decoration:none;
+}

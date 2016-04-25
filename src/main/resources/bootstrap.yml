@@ -1,0 +1,35 @@
+#spring:
+ # application:
+  #  name: manage-po-api-service
+  #
+  #cloud:
+   # config:
+    #  enabled: true
+     # uri: http://localhost:8888       
+      
+      
+# Spring properties
+spring:
+  application:
+    name: manage-po-api-service  # Identify this application
+  freemarker:
+    enabled: false     # Ignore Eureka dashboard FreeMarker templates
+  thymeleaf:
+    cache: false       # Allow Thymeleaf templates to be reloaded at runtime
+    prefix: classpath:/web-server/templates/    # Trailing / mandatory
+                       # Template location for this application only
+
+# Map the error path to error template (for Thymeleaf)
+error:
+  path=/error
+
+# Discovery Server Access
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/,http://c201s009.cg.na.jci.com:15080/E2OPOC
+
+# HTTP Server
+server:
+  port: 8181   # HTTP (Tomcat) port
+      

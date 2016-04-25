@@ -1,0 +1,99 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="copy">
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<title>E2Open Microservices Demo</title>
+
+<!-- Bootstrap -->
+<link rel="stylesheet" media="screen" href="/css/bootstrap.min.css" />
+
+<link rel="stylesheet" href="/css/font-awesome.min.css" />
+<link rel="stylesheet" href="/css/verticalbargraph.css" />
+
+<link rel="stylesheet" href="/css/styles.css" />
+
+<script th:fragment="copy" src="/js/jquery-1.9.1.min.js"></script>
+
+<link rel="stylesheet" href="/js/SlickGrid/slick.grid.css"
+	type="text/css" />
+<link rel="stylesheet" href="/js/SlickGrid/slick.grid.css"
+	type="text/css" />
+<link rel="stylesheet" href="/js/SlickGrid/controls/slick.pager.css"
+	type="text/css" />
+<link rel="stylesheet"
+	href="/js/SlickGrid/css/smoothness/jquery-ui-1.8.16.custom.css"
+	type="text/css" />
+
+<link rel="stylesheet"
+	href="/js/SlickGrid/controls/slick.columnpicker.css" type="text/css" />
+
+<link rel="stylesheet" href="/css/custom-grid-style.css" type="text/css" />
+	
+	
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]
+	      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"/></script>
+	      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"/></script>
+	    <![endif]-->
+</head>
+
+<body th:fragment="copy">
+	<script>
+        jQuery(document).ready(function () {
+            jQuery('table.highchart').highchartTable({
+                yAxis: [{
+                    lineWidth: 1,
+                    max: 8,
+                    min: 0,
+                    title: { text: 'yAxis' }
+                }]
+
+            });
+
+        });
+    </script>
+	<header>
+		<div class="row ">
+			<div class="col-sm-6">
+				<a href="IndexOne.html"><img src="img/Johnson_Controls.png"
+					style="height: 70px; width: 145px" /></a>
+
+			</div>
+			<div class="col-sm-6">
+				<div style="float: right">
+					<a href="Login%20Page.html" class="btn btn-danger">Log Off</a>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="form-group headerDiv">
+							<label for="usr" class="listview-label colorheader">Welcome
+								:</label> <label for="usr" class="listview-label"
+								style="font-weight: bold">&nbsp;Ajay</label>
+						</div>
+
+					</div>
+				</div>
+				<!--<ul class="headerUl"
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>-->
+			</div>
+
+			<div class=" headerDivOne">
+				<label for="usr" class="listview-label colorheaderdeg">(Software
+					Engineer)</label>
+			</div>
+		</div>
+
+	</header>
+
+</body>
+</html>
