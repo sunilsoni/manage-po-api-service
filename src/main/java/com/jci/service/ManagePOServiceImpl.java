@@ -18,15 +18,12 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import com.jci.model.ManagePO;
 import com.jci.model.request.FlatFileRequest;
 import com.jci.model.request.PullPoDataRequest;
 import com.jci.model.response.PoNumDataResponse;
 import com.jci.model.response.ProcessPoDataResponse;
 import com.jci.model.response.PullPoDataResponse;
 import com.jci.utils.Constants;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 
 @Service
 public class ManagePOServiceImpl implements ManagePOService{
@@ -178,19 +175,4 @@ public class ManagePOServiceImpl implements ManagePOService{
 	}
 	
 	
-	
-	//Delete below
-	@HystrixCommand(fallbackMethod = "getFallbackTransactionDetail", commandProperties = {
-			@HystrixProperty(name = "execution.isolation.strategy", value = "THREAD"),
-			@HystrixProperty(name = "circuitBreaker.requestVolumeThreshold", value = "10"),
-			@HystrixProperty(name = "circuitBreaker.sleepWindowInMilliseconds", value = "1000") })
-	@Override
-	public ManagePO getTransactionDetail(String accountNumber, long transactionId) {
-		System.out.println("### Starting ManagePOServiceImpl.getTransactionDetail ###");
-		//Transaction transaction = new Transaction("123", "FromAcc-Detail", "2014-12-12", transactionId);
-		ManagePO transaction = restTemplate.getForObject("http://manage-po-core-service/accounts/"+accountNumber+"/transactions/"+transactionId, ManagePO.class);
-		System.out.println("### Ending ManagePOServiceImpl.getTransactionDetail ###");
-		return transaction;
-	}
-
 }
