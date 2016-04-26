@@ -114,7 +114,6 @@ $("#myGrid").on('click', ".checkbox-button", function() {
 
 function processPoData() {
     var sendData = {};
-    debugger;
 
     if ($('#processMessage2').length > 0) {
         $('#processMessage2').remove();
@@ -177,7 +176,6 @@ function processPoData() {
         /*dataType: 'jsonp',*/
 
         $.ajax(settings).done(function(response) {
-            debugger;
             if (response) {
                 serverResponse = response;
                 console.log('Response after processing:');
@@ -203,7 +201,6 @@ function processPoData() {
 }; //processPoData
 
 function updateGrid(processedServerResponse) {
-   // debugger;
     //re-prepare the data based on server response
     for(psrIdx in processedServerResponse){
         for(dgIdx in dataGlobal){
