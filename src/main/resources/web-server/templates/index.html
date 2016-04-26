@@ -4,8 +4,88 @@
 
 
 <body>
-
-	<div class="container jci-color">
+	<!-- Login Start-->
+	<div id="loginContent">
+        <table border="0" cellpadding="2" style="position:absolute" cellspacing="2" height="100%" 
+               width="100%">
+            <tbody>
+                <tr>
+                    <td align="center" height="1" valign="middle" width="1">
+                        <table border="0" cellpadding="1" cellspacing="1" height="45" width="268">
+                            <tbody>
+                                <tr>
+                                    <td align="left" valign="top">
+                                        <img alt="Logo"
+                                             src="img/Johnson_Controls.png" height="50"
+                                             width="100"/><br></br>
+                                    </td>
+                                    <td align="left" valign="top">
+                                        <b>
+                                            Supplier
+                                            Collaboration
+                                        </b><b>
+                                            <br></br>
+                                        </b><b>Login..</b><br></br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="left" valign="top">
+                                        <br></br>
+                                    </td>
+                                    <td align="left" valign="top">
+                                        <br></br>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <table border="0" cellpadding="2" cellspacing="2"  height="106" width="268">
+                            <tbody>
+                                <tr>
+                                    <td valign="top">
+                                        User Name:<br></br>
+                                    </td>
+                                    <td valign="top">
+                                        <input name="User Name" type="text" id="userName"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td valign="top">
+                                        Password:<br></br>
+                                    </td>
+                                    <td valign="top">
+                                        <input name="password"
+                                               type="password" id="password"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table border="0" cellpadding="1" cellspacing="1"
+                               height="35" width="268">
+                            <tbody>
+                                <tr>
+                                    <td align="center" valign="top">
+                                        <a href="" style="width:95px" class="btn btn-info" id="submitBtn">Submit</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="top">
+                                        <br></br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center" valign="top">
+                                        <small>Copyright @ 2016 Johnson Controls</small>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+        </td>  </tr>  </tbody>
+        </table>
+    </div>
+	<!-- Login End-->
+	
+	<div class="container jci-color" id="mainContent">
 		<div th:replace="header :: copy"></div>
 
 		<section>

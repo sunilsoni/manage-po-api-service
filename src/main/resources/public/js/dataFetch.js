@@ -13,10 +13,12 @@ var dataView;
 var dataGlobal = [];
 
 $('#pullPoDataBtn').click(function() {
+	$('#loadingindicator').addClass('wait');
     pullPoData();
 });
 
 $('#processPoDataBtn').click(function() {
+	$('#loadingindicator').addClass('wait');
     processPoData();
 });
 
@@ -56,6 +58,7 @@ function pullPoData() {
             serverResponse = response;
             console.log('Response after pulling data:');
             console.log(response);
+			$('#loadingindicator').removeClass('wait');
             var responseArray = serverResponse["poDetails"];
 
             /*//for pagination
@@ -81,7 +84,7 @@ function pullPoData() {
                 '<p style="color: red">•&nbsp;&nbsp;&nbsp;Could not pull PO Data. Please retry the action.</p>' +
                 '</td>' +
                 '</tr>');
-
+			$('#loadingindicator').removeClass('wait');
         }
     });
 
@@ -149,7 +152,8 @@ function processPoData() {
             method: "POST",
             headers: {
                 'content-type': "application/json",
-                'cache-control': "no-cache"
+                'cache-control': "no-cache",
+                'postman-token': "8a35594e-6f4b-e7f5-161b-652976ef7f03"
             },
             processData: false,
             data: sendDataStr,
@@ -177,6 +181,7 @@ function processPoData() {
 
         $.ajax(settings).done(function(response) {
             if (response) {
+				$('#loadingindicator').removeClass('wait');
                 serverResponse = response;
                 console.log('Response after processing:');
                 console.log(response);
@@ -191,6 +196,7 @@ function processPoData() {
                         '<p style="color: red">•&nbsp;&nbsp;&nbsp;' + processedServerResponse["errorMsg"] + '.</p>' +
                         '</td>' +
                         '</tr>');
+						$('#loadingindicator').removeClass('wait');
                     return;
                 }
 
@@ -213,3 +219,43 @@ function updateGrid(processedServerResponse) {
     createGrid(dataGlobal);
 
 };//updateGrid
+
+
+
+
+
+$("#submitBtn").click(function(e){
+	e.preventDefault();
+	var userName = $("#userName");
+	var password = $("#password");
+	if(userName.val() === ''){
+		toastr.error('Please enter Username');
+		return;
+	}
+	
+	if(password.val() === ''){
+		toastr.error('Please enter Password');
+		return;
+	}
+	
+	if(userName.val() === "sunil" || userName.val() === "ajay" || userName.val() === "todd" || userName.val() === "bharat"){
+			if(password.val() === "jcipoc"){
+				$("#loginContent").css("display","none");
+				$("#mainContent").css("display","block");
+				jQuery('table.highchart').highchartTable({
+					yAxis: [{
+						lineWidth: 1,
+						max: 8,
+						min: 0,
+						title: { text: 'yAxis' }
+					}]
+
+				});
+				
+				
+			}
+			else{
+				toastr.error('Please enter the correct Password');
+			}
+	}
+});

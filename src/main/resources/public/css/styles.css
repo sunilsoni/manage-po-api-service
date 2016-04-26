@@ -112,3 +112,19 @@ body {
 #error > a:focus{
     text-decoration:none;
 }
+
+.wait{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0%;
+      left: 0;
+      z-index: 10000000;
+      cursor: progress;
+      background: url(../img/giphy.gif) no-repeat center center / 30px 30px rgba(0,0,0,0.03);
+}
+
+#mainContent{
+	display:none;
+	}
+}
