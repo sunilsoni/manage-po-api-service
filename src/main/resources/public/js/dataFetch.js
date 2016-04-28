@@ -25,10 +25,11 @@ $('#processPoDataBtn').click(function() {
 
 
 function pullPoData() {
-    if ($('#error2').length > 0) {
+    /*if ($('#error2').length > 0) {
         //this block executes only if error2 exists in dom.
         $('#error2').remove();
-    }
+    }*/
+	$("#errorMsg").text('');
 
     var settings = {
         async: true,
@@ -78,12 +79,21 @@ function pullPoData() {
             createGrid(responseArray);
         } else {
             //show error message in action required table
-            $('#actionRequiredTable').append(
+            /*$('#actionRequiredTable').append(
                 '<tr>' +
                 '<td id="error2">' +
                 '<p style="color: red">•&nbsp;&nbsp;&nbsp;Could not pull PO Data. Please retry the action.</p>' +
                 '</td>' +
-                '</tr>');
+                '</tr>');*/
+				/*$('#home .row .col-sm-12').before(
+                    '<div class="col-sm-8" style="padding: 20px;float:right">' +
+                    '<div id="error2">' +
+                    '<p style="color: red;margin-left: 100px;">Could not pull PO Data. Please retry the action.</p>' +
+                    '</div>' +
+                    '</div>');*/
+			$("#errorMsg").text('Could not pull PO Data. Please retry the action.').css({color:"red", marginLeft:"100px"});
+				
+				
 			$('#loadingindicator').removeClass('wait');
         }
     });
@@ -118,23 +128,36 @@ $("#myGrid").on('click', ".checkbox-button", function() {
 function processPoData() {
     var sendData = {};
 
-    if ($('#processMessage2').length > 0) {
+    /*if ($('#processMessage2').length > 0) {
         $('#processMessage2').remove();
     } else if ($('#error3').length > 0) {
         $('#error3').remove();
     } else if ($('#error4').length > 0) {
         $('#error4').remove();
-    }
+    }*/
+	$("#errorMsg").text('');
 
 
     if (dataToProcess.length <= 0) {
         console.log('No Data to process');
-        $('#actionRequiredTable').append(
+		$('#loadingindicator').removeClass('wait');
+        /*$('#actionRequiredTable').append(
             '<tr>' +
             '<td id="error3">' +
             '<p style="color: red">•&nbsp;&nbsp;&nbsp;No data was selected for processing. Please select rows for processing from below grid using the checkboxes.</p>' +
             '</td>' +
-            '</tr>');
+            '</tr>');*/
+		
+		/*$('#home .row .col-sm-12').before(
+                    '<div class="col-sm-8" style="padding: 20px;float:right">' +
+                    '<div id="error3">' +
+                    '<p style="color: red;margin-left: 40px;">No data was selected for processing. Please select rows for processing from below grid using the checkboxes.</p>' +
+                    '</div>' +
+                    '</div>');*/
+		$("#errorMsg").text('Please select atleast 1 PO number.').css({color:"red", marginLeft:"120px"});
+			
+		
+		
         return;
     } else {
         sendData = {
@@ -164,12 +187,13 @@ function processPoData() {
                 } else if ($('#error3').length > 0) {
                     $('#error3').remove();
                 }
-                $('#actionRequiredTable').append(
-                    '<tr>' +
-                    '<td id="processMessage2">' +
-                    '<p style="color: green">•&nbsp;&nbsp;&nbsp;Selected PO number(s) sent for processing.</p>' +
-                    '</td>' +
-                    '</tr>');
+                /*$('#home .row .col-sm-12').before(
+                    '<div class="col-sm-8" style="padding: 20px;float:right">' +
+                    '<div id="processMessage2">' +
+                    '<p style="color: green;margin-left: 100px;">Selected PO number(s) has been processed successfully.</p>' +
+                    '</div>' +
+                    '</div>');*/
+				$("#errorMsg").text('Selected PO number(s) has been processed successfully.').css({color:"green", marginLeft:"100px"});
 
             },
             'error': function() {
@@ -189,13 +213,22 @@ function processPoData() {
                 if (!processedServerResponse["error"]) {
                     updateGrid(processedServerResponse["poNumToStatus"]);
                 } else {
-                    $('#actionRequiredTable').append(
+                    /*$('#actionRequiredTable').append(
                         '<tr>' +
                         '<td id="error4">' +
                         '<p style="color: red">•&nbsp;&nbsp;&nbsp;The server responded with an error.</p>' +
                         '<p style="color: red">•&nbsp;&nbsp;&nbsp;' + processedServerResponse["errorMsg"] + '.</p>' +
                         '</td>' +
-                        '</tr>');
+                        '</tr>');*/
+						
+						/*$('#home .row .col-sm-12').before(
+                    '<div class="col-sm-8" style="padding: 20px;float:right">' +
+                    '<div id="error4">' +
+                    '<p style="color: red;margin-left: 120px;">The server responded with an error.</p>' +
+					'<p style="color: red">' + processedServerResponse["errorMsg"] + '.</p>' +
+                    '</div>' +
+                    '</div>');*/
+					$("#errorMsg").text('The server responded with an error.'+processedServerResponse["errorMsg"]+'.').css({color:"red", marginLeft:"120px"});
 						$('#loadingindicator').removeClass('wait');
                     return;
                 }
@@ -210,7 +243,7 @@ function updateGrid(processedServerResponse) {
     //re-prepare the data based on server response
     for(psrIdx in processedServerResponse){
         for(dgIdx in dataGlobal){
-            if(dataGlobal[dgIdx]["poNum"] === Number(psrIdx)){
+            if(dataGlobal[dgIdx]["poNum"] === psrIdx){
 
                 dataGlobal[dgIdx]["status"] = processedServerResponse[psrIdx];
             }
@@ -241,7 +274,7 @@ $("#submitBtn").click(function(e){
 	if(userName.val() === "sunil" || userName.val() === "ajay" || userName.val() === "todd" || userName.val() === "bharat"){
 			if(password.val() === "jcipoc"){
 				$("#loginContent").css("display","none");
-				$("#mainContent").css("display","block");
+				$("#mainContent, #main1").css("display","block");
 				jQuery('table.highchart').highchartTable({
 					yAxis: [{
 						lineWidth: 1,
@@ -258,4 +291,18 @@ $("#submitBtn").click(function(e){
 				toastr.error('Please enter the correct Password');
 			}
 	}
+});
+
+$("#errorBtn").click(function(e){
+	e.preventDefault();
+	
+	$("#main1").css("display","none");
+	$("#main2").css("display","block");
+});
+
+$("#goBack").click(function(e){
+	e.preventDefault();
+	
+	$("#main1").css("display","block");
+	$("#main2").css("display","none");
 });

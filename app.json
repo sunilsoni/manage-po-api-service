@@ -1,7 +1,7 @@
 {
-  "name": "Manage-PO-Core-Service",
+  "name": "Manage-PO-Api-Service",
   "description": "E2Open POC project.",
-  "website": "https://github.com/sunilsoni/manage-po-core-service",
+  "website": "https://github.com/sunilsoni/manage-po-api-service",
   "success_url": "/",
   "env": {
     "EUREKA_URL": {
