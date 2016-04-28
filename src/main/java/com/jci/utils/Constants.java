@@ -9,7 +9,7 @@ public class Constants {
 	public static final String MANAGE_PO_CORE_SERVICE_URL = "http://MANAGE-PO-CORE-SERVICE/";
 	
 	//http://c201s009.cg.na.jci.com:15080/E2OPOC
-	public static final String SI_FLAT_FILE_URL ="http://gtstaging.controls.johnsoncontrols.com/E2OPOC "; //https://gtstaging.controls.johnsoncontrols.com/E2OPOC 
+	public static final String SI_FLAT_FILE_URL ="http://gtstaging.controls.johnsoncontrols.com/E2OPOC"; //https://gtstaging.controls.johnsoncontrols.com/E2OPOC 
 		
 	/***
 	 * Below are the list of PO status.
