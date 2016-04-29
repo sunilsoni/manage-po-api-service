@@ -18,6 +18,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import com.jci.model.UpdateReqRes;
 import com.jci.model.request.FlatFileRequest;
 import com.jci.model.request.PullPoDataRequest;
 import com.jci.model.response.PoNumDataResponse;
@@ -119,6 +120,14 @@ public class ManagePOServiceImpl implements ManagePOService{
 	    Map<String, Integer> poNumToStatus = new HashMap<String, Integer>();
 	    
         String mimeType= URLConnection.guessContentTypeFromName(toFile.getName());
+        
+        Map<String,Long> poNumToIdMap = request.getPoNumToIdMap();
+        Map<Long,Integer> reqMap = new HashMap<Long,Integer>();
+        
+        long poId = poNumToIdMap.get(res.getPoNum());
+		System.out.println("poId-->"+poId);
+		UpdateReqRes updateReq = new UpdateReqRes();
+		 
 		try{
 			 RestTemplate template = new RestTemplate();
 
@@ -142,21 +151,36 @@ public class ManagePOServiceImpl implements ManagePOService{
 			 String result = template.postForObject((Constants.SI_FLAT_FILE_URL+"?filename="+toFile.getName()), map, String.class);
 			 System.out.println("result-->"+result);
 			 
+			 
 			 if(res.getPoNum()!=null){
 				 poNumToStatus.put(res.getPoNum(), Constants.STATUS_TXN_COMPLETED);		
+				 reqMap.put(poId, Constants.STATUS_TXN_COMPLETED);
 			 }else{
-			      poNumToStatus.put(request.getPoNums().get(0), Constants.STATUS_TXN_COMPLETED);		
+			      poNumToStatus.put(request.getPoNums().get(0), Constants.STATUS_TXN_COMPLETED);	
+			      reqMap.put(poId, Constants.STATUS_TXN_COMPLETED);
 			 }
+			 
 		}catch(Exception e) {
 			e.printStackTrace();
 			finalRes.setError(true);
 			finalRes.setErrorMsg("Error while processing files!!");
-			poNumToStatus.put(res.getPoNum(), Constants.STATUS_ERRO_IN_PROCESS);		
+			poNumToStatus.put(res.getPoNum(), Constants.STATUS_ERRO_IN_PROCESS);	
+			 reqMap.put(poId, Constants.STATUS_ERRO_IN_PROCESS);
 		}
 		
+		 updateReq.setIdToStatusMap(reqMap);
+		 System.out.println("updateReq-->"+updateReq);
+		 
+		 UpdateReqRes  updateRes = restTemplate.postForObject((serviceUrl+"updatePoStatus"),updateReq, UpdateReqRes.class);
+		 Map<Long,Integer> idToStatusMap = updateRes.getIdToStatusMap();
+		 System.out.println("idToStatusMap-->"+idToStatusMap);
+		 
+		 /*idToStatusMap.forEach((k,v)->{
+			 poNumToStatus.put(poId, v);
+			});*/
 		if(!toFile.delete()){
 			 File fl = new File(toFile.getAbsolutePath());
-			 fl.delete();
+			 System.out.println("deleted file or not..?-->"+fl.delete());
 		 } 
 		
 		finalRes.setPoNumToStatus(poNumToStatus);

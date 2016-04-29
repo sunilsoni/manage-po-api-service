@@ -12,7 +12,7 @@
             <tbody>
                 <tr>
                     <td align="center" height="1" valign="middle" width="1">
-                        <table border="0" cellpadding="1" cellspacing="1" height="45" width="268">
+                        <table border="0" cellpadding="1" cellspacing="1" height="45" width="400">
                             <tbody>
                                 <tr>
                                     <td align="left" valign="top">
@@ -20,13 +20,11 @@
                                              src="img/Johnson_Controls.png" height="50"
                                              width="100"/><br></br>
                                     </td>
-                                    <td align="left" valign="top">
+                                    <td align="center" valign="middle">
                                         <b>
                                             Supplier
                                             Collaboration
-                                        </b><b>
-                                            <br></br>
-                                        </b><b>Login..</b><br></br>
+                                        </b><b>Login</b>
                                     </td>
                                 </tr>
                                 <tr>
@@ -40,7 +38,7 @@
                             </tbody>
                         </table>
                         
-                        <table border="0" cellpadding="2" cellspacing="2"  height="106" width="268">
+                        <table border="0" cellpadding="2" cellspacing="2"  height="106" width="400">
                             <tbody>
                                 <tr>
                                     <td valign="top">
@@ -143,7 +141,7 @@
 							</tr>
 							<tr>
 								<td id="error"><a id="errorBtn"><p
-											style="color: red">•&nbsp;&nbsp;&nbsp;Error in Process 0</p></a>
+											style="color: red">•&nbsp;&nbsp;&nbsp;Error in Process - <span id="errorCount">0</span></p></a>
 								</td>
 							</tr>
 						</tbody>
@@ -231,7 +229,6 @@
 		<section id="main2">
 
             <div class="" style="margin:20px">
-			    <p class="errorTable">Note : Static Data</p>
 				<button type="button" style="float: right;width:115px" id="goBack" class="btn btn-info">Go Back</button>
                 <ul class="nav nav-tabs" id="tabUl">
                     <li class="active"><a data-toggle="tab" href="#home">Symix</a></li>
@@ -243,8 +240,9 @@
                     <div id="home" class="tab-pane fade in active">
                         <div class="row">
                             <div class="col-sm-12">
-
-                                <table class="table table-striped">
+								<div id="myGridErr" style="width: 100%; height: 282px;"></div>
+								<div id="pagerErr" style="width:100%;height:20px;"></div>
+                                <!--<table class="table table-striped">
                                     <thead>
                                         <tr class="headerTable">
                                             <th>PO#</th>
@@ -275,7 +273,7 @@
                                         </tr>
 
                                     </tbody>
-                                </table>
+                                </table>-->
                             </div>
                         </div>
                     </div>

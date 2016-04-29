@@ -1,6 +1,7 @@
 package com.jci.model.request;
 
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -9,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class FlatFileRequest {
 
 	private List<String> poNums =   null;
+	
+	private Map<String, Long> poNumToIdMap=null;
 
 	public List<String> getPoNums() {
 		return poNums;
@@ -18,37 +21,19 @@ public class FlatFileRequest {
 		this.poNums = poNums;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((poNums == null) ? 0 : poNums.hashCode());
-		return result;
+	public Map<String, Long> getPoNumToIdMap() {
+		return poNumToIdMap;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		FlatFileRequest other = (FlatFileRequest) obj;
-		if (poNums == null) {
-			if (other.poNums != null)
-				return false;
-		} else if (!poNums.equals(other.poNums))
-			return false;
-		return true;
+	public void setPoNumToIdMap(Map<String, Long> poNumToIdMap) {
+		this.poNumToIdMap = poNumToIdMap;
 	}
 
 	@Override
 	public String toString() {
-		return "FlatFileRequest [poNums=" + poNums + "]";
+		return "FlatFileRequest [poNums=" + poNums + ", poNumToIdMap=" + poNumToIdMap + "]";
 	}
 
-	 
 
 	
 	

@@ -7,7 +7,7 @@ server calls: pullPoData, processPoData
 */
 console.log('latest build : 1350 HRS');
 var serverResponse = null;
-var dataToProcess = [];
+var dataToProcess = [], idToPoNumMap = {};
 var grid;
 var dataView;
 var dataGlobal = [];
@@ -107,8 +107,11 @@ $("#myGrid").on('click', ".checkbox-button", function() {
     var name = this.name.split('_');
     var poNumber = name[1];
     if ($('#' + this.id).prop('checked')) {
-
+		//var poNumObj = {};
+		//idToPoNumMap[parseInt($(this).attr('poid'))] = poNumber;		
+		idToPoNumMap[poNumber] = parseInt($(this).attr('poid'));
         dataToProcess.push(poNumber);
+		//idToPoNumMap.push(poNumObj);
     } else {
         console.log('dataToProcess before splice:');
         console.log(dataToProcess);
@@ -161,7 +164,8 @@ function processPoData() {
         return;
     } else {
         sendData = {
-            poNums: dataToProcess
+            poNums: dataToProcess,
+			poNumToIdMap : idToPoNumMap
         };
         var sendDataStr = JSON.stringify(sendData);
         console.log("sendDataStr:");
@@ -236,11 +240,30 @@ function processPoData() {
             }
         });
     }
- dataToProcess = [];
+ dataToProcess = [],idToPoNumMap = {};
 }; //processPoData
 
 function updateGrid(processedServerResponse) {
-    //re-prepare the data based on server response
+    //update grid data on response
+	
+	/*var gridData = dataView.getItems();
+	for(var i=0; i< gridData.length ; i++){
+		if(processedServerResponse[parseInt(gridData[i]["po"])]){
+				if(gridData[i]["status"] == "3"){
+					var count = parseInt($('#errorCount').text());
+					$('#errorCount').text(count-1);
+					
+				}
+                gridData[i]["rowColor"] = "green";
+				gridData[i]["status"] = processedServerResponse[parseInt(gridData[i]["poNum"])];
+				gridData[i]["statusVal"] = "Transaction Completed";
+
+
+				dataView.updateItem(gridData[i]["id"], gridData[i]);
+				
+        }
+		
+	}*/
     for(psrIdx in processedServerResponse){
         for(dgIdx in dataGlobal){
             if(dataGlobal[dgIdx]["poNum"] === psrIdx){
@@ -270,11 +293,20 @@ $("#submitBtn").click(function(e){
 		toastr.error('Please enter Password');
 		return;
 	}
+	var userArr = ['sunil','ajay','todd','bharathan'];
+	var roleObj = {'sunil':"IT Analyst",'ajay':"IT Analyst",'todd':"Bus Relationship Sr Mgr IT GISC HQ IT",'bharathan':"Sr Solution Architect Info Technology Architecture"};
+	if($.inArray(userName.val(), userArr) === -1){
+		toastr.error('Please enter the correct Username');
+		return;
+	}
 	
-	if(userName.val() === "sunil" || userName.val() === "ajay" || userName.val() === "todd" || userName.val() === "bharathan"){
+	if($.inArray(userName.val(), userArr) !== -1){
 			if(password.val() === "jcipoc"){
 				$("#loginContent").css("display","none");
 				$("#mainContent, #main1").css("display","block");
+				$("#roleLabel").text(roleObj[userName.val()]);
+				var userStr = userName.val().charAt(0).toUpperCase() + userName.val().slice(1);
+				$("#userLabel").text(userStr);
 				jQuery('table.highchart').highchartTable({
 					yAxis: [{
 						lineWidth: 1,
@@ -298,6 +330,17 @@ $("#errorBtn").click(function(e){
 	
 	$("#main1").css("display","none");
 	$("#main2").css("display","block");
+	
+	var allRecords = dataView.getItems();
+	var errorRecords = [];
+	
+	for(var g=0; g < allRecords.length; g++){
+		if(allRecords[g]["status"] === 3){
+			errorRecords.push(allRecords[g]);
+		}
+	}
+	
+	createGrid(errorRecords,true);
 });
 
 $("#goBack").click(function(e){
@@ -305,4 +348,11 @@ $("#goBack").click(function(e){
 	
 	$("#main1").css("display","block");
 	$("#main2").css("display","none");
+		
+});
+
+$("#logOff").click(function(e){
+	e.preventDefault();
+	
+	location.reload();
 });
