@@ -389,7 +389,11 @@ $("#myGridErr").on('click', '.checkbox-err' , function(e){
 	
 	$('#txtSupplierId').val(supplier);
 	$('#txtPoNum').val(poNum);
-	$('#txtDescErr').val(desc);
+	//Sunil: 
+	var date1 = new Date();
+	var date2 =  date1.getFullYear() + '-' + (date1.getMonth()+1) + '-' +date1.getDate() + ' ' + date1.getHours() + ':' + date1.getMinutes() + ':' + date1.getSeconds();
+	date2 = date2+":";
+	$('#txtDescErr').val(date2);
 	
 });
 
