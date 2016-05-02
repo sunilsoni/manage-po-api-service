@@ -12,6 +12,8 @@ public class FlatFileRequest {
 	private List<String> poNums =   null;
 	
 	private Map<String, Long> poNumToIdMap=null;
+	
+	private Map<String, String> poNumToPoDesc=null;
 
 	public List<String> getPoNums() {
 		return poNums;
@@ -29,12 +31,20 @@ public class FlatFileRequest {
 		this.poNumToIdMap = poNumToIdMap;
 	}
 
+	public Map<String, String> getPoNumToPoDesc() {
+		return poNumToPoDesc;
+	}
+
+	public void setPoNumToPoDesc(Map<String, String> poNumToPoDesc) {
+		this.poNumToPoDesc = poNumToPoDesc;
+	}
+
 	@Override
 	public String toString() {
-		return "FlatFileRequest [poNums=" + poNums + ", poNumToIdMap=" + poNumToIdMap + "]";
+		return "FlatFileRequest [poNums=" + poNums + ", poNumToIdMap=" + poNumToIdMap + ", poNumToPoDesc="
+				+ poNumToPoDesc + "]";
 	}
 
 
-	
-	
+
 }

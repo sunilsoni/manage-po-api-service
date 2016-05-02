@@ -6,6 +6,12 @@ function createGrid(serverResponse,flag) {
 	  $("#myGridErr").empty();
 	  
 	  var columnsErr = [{
+		id: "poId",
+		name: "Purchase Order Id",
+		field: "poId",
+		formatter: checkBoxFormatterErr,
+		minWidth: 100
+	  },{
 		id: "poNum",
 		name: "PO Number",
 		field: "poNum",
@@ -14,7 +20,7 @@ function createGrid(serverResponse,flag) {
 		id: "poDesc",
 		name: "PO Description",
 		field: "poDesc",
-		minWidth: 350
+		minWidth: 300
 	  }, {
 		id: "dataSourceName",
 		name: "Data Source",
@@ -24,7 +30,7 @@ function createGrid(serverResponse,flag) {
 		id: "statusVal",
 		name: "Status",
 		field: "statusVal",
-		minWidth: 320
+		minWidth: 270
 	  }];
 	  var optionsErr = {
 		enableCellNavigation: true,
@@ -41,8 +47,8 @@ function createGrid(serverResponse,flag) {
 	  console.log(dataErr);
 	  //$.extend(dataGlobal,data);
 
-	  var dataViewErr = new Slick.Data.DataView();
-	  var gridErr = new Slick.Grid("#myGridErr", dataViewErr, columnsErr, optionsErr);
+	  dataViewErr = new Slick.Data.DataView();
+	  gridErr = new Slick.Grid("#myGridErr", dataViewErr, columnsErr, optionsErr);
 	  /*grid.setSelectionModel(new Slick.RowSelectionModel());*/
 	  var pager = new Slick.Controls.Pager(dataViewErr, gridErr, $("#pagerErr"));
 	  var columnpicker = new Slick.Controls.ColumnPicker(columnsErr, gridErr, optionsErr);
@@ -309,4 +315,8 @@ function checkBoxFormatter(row, cell, value, columnDef, dataContext) {
     }else if(dataContext["status"] === 2){
         return "<input type='checkbox' class='checkbox-button' id='checkbox_" + row + "' name='po_"+ poNumber+"' value='" + value + "' disabled poid='"+dataContext['poId']+"'>";
     }
+};
+
+function checkBoxFormatterErr(row, cell, value, columnDef, dataContext) {
+   return "<input type='checkbox' class='checkbox-button checkbox-err'  poid='"+dataContext['poId']+"' desc='"+dataContext['poDesc']+"' po-num='"+dataContext['poNum']+"' supplier='"+dataContext['supplierId']+"' id='"+dataContext['id']+"'>";
 };

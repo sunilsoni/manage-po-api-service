@@ -122,6 +122,9 @@ public class ManagePOServiceImpl implements ManagePOService{
         String mimeType= URLConnection.guessContentTypeFromName(toFile.getName());
         
         Map<String,Long> poNumToIdMap = request.getPoNumToIdMap();
+        Map<String,String> poNumToPoDesc = request.getPoNumToPoDesc();
+        System.out.println("poNumToPoDesc-->"+poNumToPoDesc);
+        
         Map<Long,Integer> reqMap = new HashMap<Long,Integer>();
         
         long poId = poNumToIdMap.get(res.getPoNum());

@@ -8,9 +8,9 @@ server calls: pullPoData, processPoData
 console.log('latest build : 1350 HRS');
 var serverResponse = null;
 var dataToProcess = [], idToPoNumMap = {};
-var grid;
-var dataView;
-var dataGlobal = [];
+var grid, gridErr;
+var dataView, dataViewErr;
+var dataGlobal = [], descGlobalText={};
 
 $('#pullPoDataBtn').click(function() {
 	$('#loadingindicator').addClass('wait');
@@ -128,7 +128,7 @@ $("#myGrid").on('click', ".checkbox-button", function() {
 
 });
 
-function processPoData() {
+function processPoData(errFlag) {
     var sendData = {};
 
     /*if ($('#processMessage2').length > 0) {
@@ -163,10 +163,13 @@ function processPoData() {
 		
         return;
     } else {
+		
         sendData = {
             poNums: dataToProcess,
-			poNumToIdMap : idToPoNumMap
+			poNumToIdMap : idToPoNumMap,
+			poDesc : descGlobalText
         };
+		
         var sendDataStr = JSON.stringify(sendData);
         console.log("sendDataStr:");
         console.log(sendDataStr);
@@ -214,8 +217,19 @@ function processPoData() {
                 console.log('Response after processing:');
                 console.log(response);
                 var processedServerResponse = response;
+				descGlobalText = {};
+				dataToProcess = [];
+				idToPoNumMap = {};
                 if (!processedServerResponse["error"]) {
-                    updateGrid(processedServerResponse["poNumToStatus"]);
+					var checkedRow = $(".checkbox-err:checked");
+					var errId = checkedRow.attr('id');
+					dataViewErr.deleteItem(errId);
+					
+					$('#txtSupplierId').val('');
+					$('#txtPoNum').val('');
+					$('#txtDescErr').val('');
+					
+                    updateGrid(processedServerResponse["poNumToStatus"],errFlag);
                 } else {
                     /*$('#actionRequiredTable').append(
                         '<tr>' +
@@ -240,10 +254,10 @@ function processPoData() {
             }
         });
     }
- dataToProcess = [],idToPoNumMap = {};
+ dataToProcess = [],idToPoNumMap = {},descGlobalText = {};
 }; //processPoData
 
-function updateGrid(processedServerResponse) {
+function updateGrid(processedServerResponse,errFlag) {
     //update grid data on response
 	
 	/*var gridData = dataView.getItems();
@@ -272,7 +286,8 @@ function updateGrid(processedServerResponse) {
             }
         }//dataGlobal
     }//psr
-    createGrid(dataGlobal);
+    //createGrid(dataGlobal,errFlag);
+	createGrid(dataGlobal);
 
 };//updateGrid
 
@@ -328,6 +343,11 @@ $("#submitBtn").click(function(e){
 $("#errorBtn").click(function(e){
 	e.preventDefault();
 	
+	if(dataGlobal && dataGlobal.length < 1){
+		toastr.error('No Data to Process');
+		return;
+	}
+	
 	$("#main1").css("display","none");
 	$("#main2").css("display","block");
 	
@@ -348,6 +368,7 @@ $("#goBack").click(function(e){
 	
 	$("#main1").css("display","block");
 	$("#main2").css("display","none");
+	grid.resizeCanvas();
 		
 });
 
@@ -356,3 +377,35 @@ $("#logOff").click(function(e){
 	
 	location.reload();
 });
+
+$("#myGridErr").on('click', '.checkbox-err' , function(e){
+	
+	$('#myGridErr').find('.checkbox-err').prop('checked',false);
+	$(this).prop('checked',true);
+	
+	var desc = 	$(this).attr('desc');
+	var poNum = $(this).attr('po-num');
+	var supplier = $(this).attr('supplier');
+	
+	$('#txtSupplierId').val(supplier);
+	$('#txtPoNum').val(poNum);
+	$('#txtDescErr').val(desc);
+	
+});
+
+$("#submitErrBtn").click(function(e){
+	$('#loadingindicator').addClass('wait');
+	descGlobalText = {};
+	idToPoNumMap = {};
+	dataToProcess = [];
+	
+	
+	var checkedRow = $(".checkbox-err:checked");
+	var poNum = checkedRow.attr('po-num');
+	
+	descGlobalText[poNum] = $('#txtDescErr').val();
+	idToPoNumMap[poNum] = parseInt(checkedRow.attr('poid'));
+    dataToProcess.push(poNum);
+    processPoData(true);
+});
+

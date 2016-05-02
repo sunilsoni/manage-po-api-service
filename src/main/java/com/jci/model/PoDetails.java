@@ -7,13 +7,14 @@ public class PoDetails {
 	private String poDesc;
 	private String dataSource;
 	private int status;
+	private String supplierId;
+	
 	public Long getPoId() {
 		return poId;
 	}
 	public void setPoId(Long poId) {
 		this.poId = poId;
 	}
-
 
 	public String getPoNum() {
 		return poNum;
@@ -42,33 +43,20 @@ public class PoDetails {
 		this.status = status;
 	}
 	 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		PoDetails other = (PoDetails) obj;
-		if (dataSource != other.dataSource)
-			return false;
-		if (poId == null) {
-			if (other.poId != null)
-				return false;
-		} else if (!poId.equals(other.poId))
-			return false;
-		if (poNum != other.poNum)
-			return false;
-		if (status != other.status)
-			return false;
-		return true;
+	
+	public String getSupplierId() {
+		return supplierId;
 	}
+	public void setSupplierId(String supplierId) {
+		this.supplierId = supplierId;
+	}
+	
 	@Override
 	public String toString() {
 		return "PoDetails [poId=" + poId + ", poNum=" + poNum + ", poDesc=" + poDesc + ", dataSource=" + dataSource
-				+ ", status=" + status + "]";
+				+ ", status=" + status + ", supplierId=" + supplierId + "]";
 	}
+ 
 	
 	
 }
