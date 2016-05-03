@@ -11,6 +11,8 @@ var dataToProcess = [], idToPoNumMap = {};
 var grid, gridErr;
 var dataView, dataViewErr;
 var dataGlobal = [], descGlobalText={};
+var userArr = ['sunil','ajay','todd','bharathan'];
+var roleObj = {'sunil':"IT Analyst",'ajay':"IT Analyst",'todd':"Bus Relationship Sr Mgr IT GISC HQ IT",'bharathan':"Sr Solution Architect Info Technology Architecture"};
 
 $('#pullPoDataBtn').click(function() {
 	$('#loadingindicator').addClass('wait');
@@ -223,11 +225,18 @@ function processPoData(errFlag) {
                 if (!processedServerResponse["error"]) {
 					var checkedRow = $(".checkbox-err:checked");
 					var errId = checkedRow.attr('id');
-					dataViewErr.deleteItem(errId);
+					if(errId){
+						dataViewErr.deleteItem(errId);
+					}
+					
 					
 					$('#txtSupplierId').val('');
 					$('#txtPoNum').val('');
 					$('#txtDescErr').val('');
+					
+					if(errFlag){
+						$("#errorMsg").text('');
+					}
 					
                     updateGrid(processedServerResponse["poNumToStatus"],errFlag);
                 } else {
@@ -308,8 +317,7 @@ $("#submitBtn").click(function(e){
 		toastr.error('Please enter Password');
 		return;
 	}
-	var userArr = ['sunil','ajay','todd','bharathan'];
-	var roleObj = {'sunil':"IT Analyst",'ajay':"IT Analyst",'todd':"Bus Relationship Sr Mgr IT GISC HQ IT",'bharathan':"Sr Solution Architect Info Technology Architecture"};
+	
 	if($.inArray(userName.val(), userArr) === -1){
 		toastr.error('Please enter the correct Username');
 		return;
@@ -317,22 +325,9 @@ $("#submitBtn").click(function(e){
 	
 	if($.inArray(userName.val(), userArr) !== -1){
 			if(password.val() === "jcipoc"){
-				$("#loginContent").css("display","none");
-				$("#mainContent, #main1").css("display","block");
-				$("#roleLabel").text(roleObj[userName.val()]);
-				var userStr = userName.val().charAt(0).toUpperCase() + userName.val().slice(1);
-				$("#userLabel").text(userStr);
-				jQuery('table.highchart').highchartTable({
-					yAxis: [{
-						lineWidth: 1,
-						max: 8,
-						min: 0,
-						title: { text: 'yAxis' }
-					}]
-
-				});
-				
-				
+				setLabel(userName.val());
+				successLogin();
+				onLogin(userName.val());
 			}
 			else{
 				toastr.error('Please enter the correct Password');
@@ -374,7 +369,7 @@ $("#goBack").click(function(e){
 
 $("#logOff").click(function(e){
 	e.preventDefault();
-	
+	onLogin($("#userLabel").text().toLowerCase(),true);
 	location.reload();
 });
 
@@ -412,4 +407,80 @@ $("#submitErrBtn").click(function(e){
     dataToProcess.push(poNum);
     processPoData(true);
 });
+
+
+function setLabel(userName){
+	var userArr = ['sunil','ajay','todd','bharathan'];
+	var roleObj = {'sunil':"IT Analyst",'ajay':"IT Analyst",'todd':"Bus Relationship Sr Mgr IT GISC HQ IT",'bharathan':"Sr Solution Architect Info Technology Architecture"};
+	$("#roleLabel").text(roleObj[userName]);
+	var userStr = userName.charAt(0).toUpperCase() + userName.slice(1);
+	$("#userLabel").text(userStr);
+	
+}
+
+function successLogin(){
+	$("#loginContent").css("display","none");
+	$("#mainContent, #main1").css("display","block");
+	//jQuery('table.highchart').empty();
+	
+	if($(".highcharts-container") && $(".highcharts-container").length === 0){
+		jQuery('table.highchart').highchartTable({
+			yAxis: [{
+				lineWidth: 1,
+				max: 8,
+				min: 0,
+				title: { text: 'yAxis' }
+			}]
+
+		});
+	}
+	
+	
+}
+
+
+
+
+function onLogin(username, signOut){
+	var isLogin, refresh = true;
+	if(username){
+		isLogin = true;
+	}
+	else{
+		username = null;
+		isLogin = false
+	}
+	if(signOut){
+		refresh = false;
+		isLogin = false;
+	}
+	var objLogin = {refresh: refresh, login:isLogin,username:username};
+	jQuery.ajax({
+    headers: { 
+        'Accept': 'application/json',
+        'Content-Type': 'application/json' 
+    },
+    'type': 'POST',
+    'url': 'isLogin',
+    'data': JSON.stringify(objLogin),
+    'dataType': 'json',
+    'success': function(data){
+		if(data.login){
+			setLabel(data.username);
+			successLogin();
+		}
+		else{
+			if(!signOut){
+				$("#loginContent").css("display","block");
+			}
+			
+		}
+	 }
+	});
+	
+}
+
+onLogin();
+
+
 

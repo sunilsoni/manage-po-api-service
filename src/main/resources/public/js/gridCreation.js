@@ -1,3 +1,5 @@
+
+
 function createGrid(serverResponse,flag) {
   console.log('in gridCreation.js file. new build');
 
@@ -310,9 +312,9 @@ function checkBoxFormatter(row, cell, value, columnDef, dataContext) {
   //debugger;
     var value = dataContext["poId"];
     var poNumber = dataContext["poNum"]
-    if (dataContext["status"] === 1 || dataContext["status"] === 3) {
+    if (dataContext["status"] === 1) {
         return "<input type='checkbox' class='checkbox-button' id='checkbox_" + row + "' name='po_"+ poNumber+"' value='" + value + "' poid='"+dataContext['poId']+"'>";
-    }else if(dataContext["status"] === 2){
+    }else if(dataContext["status"] === 2 || dataContext["status"] === 3){
         return "<input type='checkbox' class='checkbox-button' id='checkbox_" + row + "' name='po_"+ poNumber+"' value='" + value + "' disabled poid='"+dataContext['poId']+"'>";
     }
 };

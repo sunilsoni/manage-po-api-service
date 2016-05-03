@@ -124,7 +124,7 @@ body {
       background: url(../img/giphy.gif) no-repeat center center / 30px 30px rgba(0,0,0,0.2);
 }
 
-#mainContent,#main1,#main2{
+#mainContent,#main1,#main2,#loginContent{
 	display:none;
 	
 }
