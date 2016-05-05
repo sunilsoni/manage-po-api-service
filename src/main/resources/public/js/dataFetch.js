@@ -202,7 +202,7 @@ function processPoData(errFlag) {
                     '<p style="color: green;margin-left: 100px;">Selected PO number(s) has been processed successfully.</p>' +
                     '</div>' +
                     '</div>');*/
-				$("#errorMsg").text('Selected PO number(s) has been processed successfully.').css({color:"green", marginLeft:"100px"});
+				//$("#errorMsg").text('Selected PO number(s) has been processed successfully.').css({color:"green", marginLeft:"100px"});
 
             },
             'error': function() {
