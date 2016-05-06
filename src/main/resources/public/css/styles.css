@@ -124,7 +124,7 @@ body {
       background: url(../img/giphy.gif) no-repeat center center / 30px 30px rgba(0,0,0,0.2);
 }
 
-#mainContent,#main1,#main2,#loginContent{
+#mainContent,#main1,#main2{
 	display:none;
 	
 }
@@ -146,5 +146,9 @@ body {
 
 .blue {
     background-color: rgb(244, 247, 249)!important;
+}
+
+#loginContent{
+	display:none;
 }
 

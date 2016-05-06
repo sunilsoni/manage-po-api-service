@@ -79,6 +79,7 @@ function pullPoData() {
             //pagination*/
 
             createGrid(responseArray);
+			
         } else {
             //show error message in action required table
             /*$('#actionRequiredTable').append(
@@ -302,9 +303,7 @@ function updateGrid(processedServerResponse,errFlag) {
 
 
 
-
-
-$("#submitBtn").click(function(e){
+function onSubmit(e){
 	e.preventDefault();
 	var userName = $("#userName");
 	var password = $("#password");
@@ -325,13 +324,22 @@ $("#submitBtn").click(function(e){
 	
 	if($.inArray(userName.val(), userArr) !== -1){
 			if(password.val() === "jcipoc"){
-				setLabel(userName.val());
-				successLogin();
+				//setLabel(userName.val());
+				//successLogin();
 				onLogin(userName.val());
 			}
 			else{
 				toastr.error('Please enter the correct Password');
 			}
+	}
+}
+
+
+$("#submitBtn").click(onSubmit);
+
+$('.loginEnter').on('keypress', function(e){
+	if(e.which == 13){
+		onSubmit(e);
 	}
 });
 
@@ -370,7 +378,7 @@ $("#goBack").click(function(e){
 $("#logOff").click(function(e){
 	e.preventDefault();
 	onLogin($("#userLabel").text().toLowerCase(),true);
-	location.reload();
+	
 });
 
 $("#myGridErr").on('click', '.checkbox-err' , function(e){
@@ -423,17 +431,86 @@ function successLogin(){
 	$("#mainContent, #main1").css("display","block");
 	//jQuery('table.highchart').empty();
 	
-	if($(".highcharts-container") && $(".highcharts-container").length === 0){
-		jQuery('table.highchart').highchartTable({
-			yAxis: [{
-				lineWidth: 1,
-				max: 8,
-				min: 0,
-				title: { text: 'yAxis' }
-			}]
+	// if($(".highcharts-container") && $(".highcharts-container").length === 0){
+		// jQuery('table.highchart').highchartTable({
+			// yAxis: [{
+				// lineWidth: 1,
+				// max: 8,
+				// min: 0,
+				// title: { text: 'yAxis' }
+			// }]
 
-		});
+		// });
+	// }
+	createHighcharts();
+	
+	
+	
+	
+}
+
+
+function createHighcharts(plotData){
+	
+	$('#highchartContainer').empty();
+	if(!plotData){
+		plotData = [{
+				name: 'Processed',
+				data: [0, 0, 0, 0],
+				color: "#90ed7d"
+
+			}, {
+				name: 'In-Transit',
+				data: [0, 0, 0, 0],
+				color: "#7cb5ec"
+
+			}, {
+				name: 'Errored',
+				data: [0, 0, 0, 0],
+				color: "#AA4643"
+
+			}];
 	}
+	$('#highchartContainer').highcharts({
+		chart: {
+			type: 'column'
+		},
+		title: {
+			text: 'Source Collaboration Dashboard'
+		},
+		xAxis: {
+			categories: [
+				'Symix',
+				'SAP',
+				'Oracle',
+				'Mapics',
+			],
+			crosshair: true
+		},
+		yAxis: {
+			min: 0,
+			tickInterval:1,
+			allowDecimals:false
+			/*title: {
+				text: 'Rainfall (mm)'
+			}*/
+		},
+		tooltip: {
+			headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+			pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+				'<td style="padding:0"><b>{point.y}</b></td></tr>',
+			footerFormat: '</table>',
+			shared: true,
+			useHTML: true
+		},
+		plotOptions: {
+			column: {
+				pointPadding: 0.2,
+				borderWidth: 0
+			}
+		},
+		series: plotData
+	});
 	
 	
 }
@@ -474,6 +551,10 @@ function onLogin(username, signOut){
 				$("#loginContent").css("display","block");
 			}
 			
+		}
+		
+		if(signOut){
+			location.reload();
 		}
 	 }
 	});

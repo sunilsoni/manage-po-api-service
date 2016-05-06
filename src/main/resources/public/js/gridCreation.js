@@ -40,9 +40,9 @@ function createGrid(serverResponse,flag) {
 	  };
 
 	  console.log('In createGridErr');
-		
+	  var inTransitCount=0, erroredCount = 0, processedCount = 0;
 	  for(var i = 0; i< serverResponse.length; i++){
-                serverResponse[i]["id"] = i;
+          serverResponse[i]["id"] = i;
       }
 	  var dataErr = serverResponse;
 	  //var data = prepareData(serverResponse);
@@ -223,7 +223,7 @@ function createGrid(serverResponse,flag) {
 
 function prepareData(dataArray) {
   //debugger;
-  var errorCount = 0;
+  var errorCount = 0,inTransitCount = 0, processedCount = 0;
   console.log('Data length: ' + dataArray.length);
   if (dataArray.length > 0) {
     for (var idx in dataArray) {
@@ -241,10 +241,12 @@ function prepareData(dataArray) {
         case 1:
           record['statusVal'] = "In-transit";
           record['rowColor'] = 'blue';
+		  inTransitCount++;
           break;
         case 2:
           record['statusVal'] = "Transaction Completed";
           record['rowColor'] = 'green';
+		  processedCount++;
           break;
         case 3:
           record['statusVal'] = "Error in Process";
@@ -278,6 +280,26 @@ function prepareData(dataArray) {
 	
 	//display error count in label
 	$('#errorCount').text(errorCount);
+	
+	var plotData = [{
+				name: 'Processed',
+				data: [processedCount, 3, 2, 1],
+				color: "#90ed7d"
+
+			}, {
+				name: 'In-Transit',
+				data: [inTransitCount, 4, 4, 1],
+				color: "#7cb5ec"
+
+			}, {
+				name: 'Errored',
+				data: [errorCount, 6, 9, 2],
+				color: "#AA4643"
+
+			}];
+	createHighcharts(plotData);
+	
+	
     return dataArray;
   } else {
     console.log('No data received');
