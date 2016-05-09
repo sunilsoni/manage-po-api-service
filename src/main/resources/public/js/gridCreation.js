@@ -9,7 +9,7 @@ function createGrid(serverResponse,flag) {
 	  
 	  var columnsErr = [{
 		id: "poId",
-		name: "Purchase Order Id",
+		name: "Select",
 		field: "poId",
 		formatter: checkBoxFormatterErr,
 		minWidth: 100
@@ -112,7 +112,7 @@ function createGrid(serverResponse,flag) {
 	  //$("#myGrid").empty();
 	  var columns = [{
 		id: "poId",
-		name: "Purchase Order Id",
+		name: "Select",
 		field: "poId",
 		formatter: checkBoxFormatter,
 		minWidth: 100
